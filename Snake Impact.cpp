@@ -2,7 +2,11 @@
 #include <conio.h>
 #include <Windows.h>
 #include <stdlib.h>
+#include <string>
+#include <fstream>
+#include <chrono>
 
+using namespace std::chrono;
 using namespace std;
 
 enum direction
@@ -15,26 +19,134 @@ int main()
 {
 	srand(time(nullptr));
 	
-	bool game_over = false;
-	const short width = 60,height = 20;
-	short	x = width - 1,
-			y = height - 1,
-			pearl_x = rand() % width,
-			pearl_y = rand() % height,
-			bonus_x = rand() % width,
-			bonus_y = rand() % height,
-			dynamic_bonus = rand() % 5 + 1,
-			tail_x[100], 
-			tail_y[100];
-	long double score = 0;
-	unsigned short tail_length = 0;
-	dir = STOP;
+	bool game_over =	false;
+	const short			width = 60,height = 20;
+	unsigned short		tail_length = 0;
+	long double			score = 0;
+	short				x = width - 1,
+						y = height - 1,
+						pearl_x = rand() % width,
+						pearl_y = rand() % height,
+						bonus_x = rand() % width,
+						bonus_y = rand() % height,
+						dynamic_bonus = rand() % 9 + 1,
+						tail_x[999], 
+						tail_y[999],
+						game_speed,
+						score_multiplier = 0,
+						steps_counter = 0;
+	dir				=	STOP;
 
+	string line = "Snake_art.txt";
+	ifstream inFile;
+	inFile.open("Snake_art.txt");
+	if (inFile.is_open())
+	{
+		while (getline(inFile, line))
+			cout << line << endl;
+		
+		cout << endl;
+	}
+	else
+	{
+		cout << "       xxxxx" << endl << "$ ~Oxxxx   xxxxx     xxxxxxxxxxxxx" << endl << "               xxxxxxx" << endl;
+	}
+	inFile.close();
+
+	cout << endl << "****Welcome to Snake Impact!!!****" << endl;
+	cout << " **v2.0.1. By Ryck. Sep/7/2023.** " << endl << endl;
+
+	cout << "Please choose a level (0-9): ";
+
+	do
+	{
+		char ans = _getch();
+
+		if (ans == '0')
+		{
+			game_speed = 450;
+			score_multiplier = 1;
+			break;
+		}
+		if (ans == '1')
+		{
+			game_speed = 400;
+			score_multiplier = 2;
+			break;
+		}
+		if (ans == '2')
+		{
+			game_speed = 350;
+			score_multiplier = 3;
+			break;
+		}
+		if (ans == '3')
+		{
+			game_speed = 300;
+			score_multiplier = 4;
+			break;
+		}
+		if (ans == '4')
+		{
+			game_speed = 250;
+			score_multiplier = 5;
+			break;
+		}
+		if (ans == '5')
+		{
+			game_speed = 200;
+			score_multiplier = 6;
+			break;
+		}
+		if (ans == '6')
+		{
+			game_speed = 150;
+			score_multiplier = 7;
+			break;
+		}
+		if (ans == '7')
+		{
+			game_speed = 100;
+			score_multiplier = 8;
+			break;
+		}
+		if (ans == '8')
+		{
+			game_speed = 50;
+			score_multiplier = 9;
+			break;
+		}
+		if (ans == '9')
+		{
+			game_speed = 1;
+			score_multiplier = 10;
+			break;
+		}
+	} while (true);
 
 	while(!game_over)
 	{
-		Sleep(1);
+		Sleep(game_speed);
 		system("cls");
+
+		bool spawn_bonus = false;
+		
+		if ((tail_length > 0) && (tail_length % dynamic_bonus == 0))
+			spawn_bonus = true;
+
+		if (spawn_bonus)
+			if (x - 1 || x + 1 || y - 1 || y + 1)
+				steps_counter++;
+
+		if (steps_counter > 75)
+		{
+			spawn_bonus = false;
+			steps_counter = 0;
+			dynamic_bonus = rand() % 9 + 1;
+			tail_length++;
+			bonus_x = (rand() + rand()) % width;
+			bonus_y = (rand() + rand()) % height;
+		}
 
 		for (short i = 0; i < width + 2; i++)
 			cout << "+";
@@ -46,7 +158,7 @@ int main()
 			{
 				if (j == 0)
 					cout << "+";
-				if ((j == bonus_x && i == bonus_y) && (tail_length > 0) && (tail_length % dynamic_bonus == 0))
+				if ((j == bonus_x && i == bonus_y) && (spawn_bonus))
 						cout << "$";
 				else if (j == x && i == y)
 					cout << "O";
@@ -76,15 +188,16 @@ int main()
 			cout << "+";
 
 		cout << endl << "Keys: \tW S A D \tQuit: \tX" << endl << "Tail: \t" << tail_length << "\t\tScore: \t" << score << endl;
-		cout << __DATE__ << ", " << __TIME__;
+		cout << __DATE__ << ", " << __TIME__ << endl << steps_counter;
 
-		short prev_tail_x = tail_x[0],
-			prev_tail_y = tail_y[0],
-			x_tail_buffer,
-			y_tail_buffer;
 
-			tail_x[0] = x;
-			 tail_y[0] = y;
+		short	prev_tail_x = tail_x[0],
+				prev_tail_y = tail_y[0],
+				x_tail_buffer,
+				y_tail_buffer;
+
+		tail_x[0] = x;
+		tail_y[0] = y;
 
 		for (short i = 1; i < tail_length; i++)
 		{
@@ -113,7 +226,7 @@ int main()
 				dir = RIGHT;
 				break;
 			case'x':
-				game_over = true ;
+				game_over = true;
 				break;
 			case'W':
 				dir = UP;
@@ -167,18 +280,20 @@ int main()
 		{
 			pearl_x = rand() % width;
 			pearl_y = rand() % height;
-			score += 10;
+			score += 10 * score_multiplier;
 			tail_length++;
+			steps_counter = 0;
 		}
 
-		if ((tail_length > 0) && (tail_length % dynamic_bonus == 0) && (x == bonus_x && y == bonus_y))
+		if ((tail_length > 0) && (spawn_bonus) && (x == bonus_x && y == bonus_y))
 		{
-			score += 100;
-			dynamic_bonus += rand() % 4;
-			tail_length -= rand() & 3;
+			score += 100 * score_multiplier;
+			dynamic_bonus += rand() % 9;
+			if (tail_length > 2)
+				tail_length -= rand() & 3;
 			bonus_x = rand() % width;
 			bonus_y = rand() % height;
-			
+			steps_counter = 0;
 		}
 	}
 
@@ -198,9 +313,27 @@ int main()
 		} while (true);
 		
 		system("cls");
-		cout << "Your final score was " << score << ". Goodbye!" << endl;
+
+		string line = "Snake_art.txt";
+		ifstream inFile;
+		inFile.open("Snake_art.txt");
+		if (inFile.is_open())
+		{
+			while (getline(inFile, line))
+				cout << line << endl;
+
+			cout << endl;
+		}
+		else
+		{
+			cout << "       xxxxx" << endl << "$ ~Oxxxx   xxxxx     xxxxxxxxxxxxx" << endl << "               xxxxxxx" << endl;
+		}
+		inFile.close();
+
+		cout << endl << "Your final score was " << score << ". Goodbye!" << endl;
 	}
 
 	system("pause");
+	exit(1);
 	return 0;
 }
