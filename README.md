@@ -66,6 +66,7 @@ Gameplay Balancing
 ______________________________________________________________________________________________________________________________
 
 # Snake Impact!!! v2.1.0 (9/13/2023)
+
 Features 
 
 - Set maximum tail length to 999 just in case someone wants to set the world record in this game.
