@@ -48,7 +48,7 @@ Features
 - Added Scoreboard.
 - Player is now asked for his name at the start of the game which can be also used to save scores.
 - Added an option to switch Snakey's head to a pointy model while in-game.
-- Game becomes over when tail length reaches 999, crowning player as the Chose One.
+- Game becomes over when tail length reaches 999, crowning player as the Chosen One.
 
 Bugs
 
