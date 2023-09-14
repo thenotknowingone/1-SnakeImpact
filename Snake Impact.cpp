@@ -438,7 +438,6 @@ int main()
 		{
 			spawn_bonus = false;
 			steps_counter = 0;
-			tail_length++;
 			bonus_x = (rand() + rand()) % width;
 			bonus_y = (rand() + rand()) % height;
 		}
@@ -661,7 +660,6 @@ int main()
 			bonus_y = rand() % height;
 			steps_counter = 0;
 			spawn_bonus = false;
-			tail_length++;
 		}
 
 		if (tail_length >= 999)
