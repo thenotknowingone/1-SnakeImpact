@@ -41,7 +41,35 @@ This code is a freeware. Please feel free to download, edit and re-distribute th
 
 ## Updates and Bug Fixes
 
-# Snake Impact!!! v2.2.0 (9/14/2023)
+# Snake Impact!!! v2.3.0 (Sept/15/2023)
+
+Features
+
+- Added Scoreboard.
+- Player is now asked for his name at the start of the game which can be also used to save scores.
+- Added an option to switch Snakey's head to a pointy model while in-game.
+- Game becomes over when tail length reaches 999, crowning player as the Chose One.
+
+Bugs
+
+- Removed the "ghost" bonus on succeeding games after play again is triggered, which in turn adds 1 tail length upon expiration.
+
+Gameplay Balancing
+
+- Snakey now starts with 3 tail length.
+- First bonus now appears when Snakey has 10 tail length and then appears every 7th tail length Snakey accumulates, thereafter.
+- Base score is now at 1 instead of 10 (before speed multiplier).
+- Increased game speed per level except level 9.
+- Player is no longer penalized with +1 when capturing or missing the bonus.
+
+User Interface
+
+- Updated game exit Snakey art.
+- Moved score interface to the right just in case you managed to break the game and rack up to zillionth scores (I mean, why not?).
+- Snakey now starts at coordinates x = 2, y = 2.
+______________________________________________________________________________________________________________________________
+
+# Snake Impact!!! v2.2.0 (Sept/14/2023)
 
 Features
 
@@ -65,14 +93,9 @@ Gameplay Balancing
 - Tail length decrement now only triggers when tail length is above or equal to 500 (1-2) and above or equal to 750 (1-3).
 ______________________________________________________________________________________________________________________________
 
-# Snake Impact!!! v2.1.0 (9/13/2023)
-
+# Snake Impact!!! v2.1.0 (Sept/13/2023)
 Features 
 
 - Set maximum tail length to 999 just in case someone wants to set the world record in this game.
 - Bonus now expires after some duration or when pearl is eaten first.
 - Added main menu and a game speed selector (0 - 9) with score multiplier depending on the speed selected.
-
-Bug Fixes
-
-- Set bonus to trigger only when the tail length is greater than 2 to avoid tail decrement modulo operation by 0 which causes exception errors.
