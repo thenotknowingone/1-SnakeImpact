@@ -41,6 +41,22 @@ This code is a freeware. Please feel free to download, edit and re-distribute th
 
 ## Updates and Bug Fixes
 
+# Snake Impact!!! v2.3.1 (Sept/16/2023)
+
+Bugs
+
+- Fixed scoreboard date and time.
+
+User Interface
+
+- Fixed date and time while in game. Now refreshes every time the game starts.
+- Added level indicator while in-game.
+- Added fun features.
+- Adventurers can now enter up to 37 characters as for their username.
+- Added more dialogues in some parts of the game.
+- Improved graphic designs.
+______________________________________________________________________________________________________________________________
+
 # Snake Impact!!! v2.3.0 (Sept/15/2023)
 
 Features
