@@ -1,11 +1,24 @@
-﻿#include <iostream>
+﻿#include <chrono>
 #include <conio.h>
-#include <Windows.h>
-#include <stdlib.h>
-#include <string>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+#include <Windows.h>
 
+std::string game_version = "v2.3.1"; //Developers only!
+
+void Window_settings()
+{
+	HWND console = GetConsoleWindow();
+
+	if (console != NULL) 
+	{
+		SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_SIZEBOX);
+	}
+
+}
 
 void Help()
 {
@@ -18,6 +31,7 @@ void Help()
 	std::string help_title_5 = "V. Tips";
 	std::string help_title_6 = "VI. Feedback";
 	std::string help_title_7 = "VII. Dedication";
+	std::string help_title_8 = "VIII. Game Version";
 
 	std::cout << help_title_1 << std::endl;
 
@@ -55,8 +69,9 @@ void Help()
 	std::cout << std::left << std::setw(20) << "Slim Snakey" << std::setw(10) << "." << std::setw(50) << "Makes Snakey look slimmer. Press '.' while in-game." << std::endl;
 	std::cout << std::left << std::setw(20) << "Buff Snakey" << std::setw(10) << "," << std::setw(50) << "Makes Snakey look buffed. Press ',' while in-game." << std::endl;
 	std::cout << std::left << std::setw(20) << "Wavy Snakey" << std::setw(10) << "/" << std::setw(50) << "Makes Snakey look wavy. Press '/' while in-game." << std::endl;
-	std::cout << std::left << std::setw(20) << "Pointy Head on" << std::setw(10) << "M" << std::setw(50) << "Makes Snakey's head look pointy. Press 'M' while in-game." << std::endl;
-	std::cout << std::left << std::setw(20) << "Pointy Head off" << std::setw(10) << "N" << std::setw(50) << "Makes Snakey's head round again. Press 'N' while in-game." << std::endl;
+	std::cout << std::left << std::setw(20) << "Pointy Head" << std::setw(10) << "M" << std::setw(50) << "Makes Snakey's head look pointy. Press 'M' while in-game." << std::endl;
+	std::cout << std::left << std::setw(20) << "Round Head" << std::setw(10) << "N" << std::setw(50) << "Makes Snakey's head round. Press 'N' while in-game." << std::endl;
+	std::cout << std::left << std::setw(20) << "What lvl is this?" << std::setw(10) << "B" << std::setw(50) << "Seriously. Don't activate or Snakey will keep the lvl in his head." << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
@@ -188,6 +203,35 @@ void Help()
 		std::cout << "=";
 		std::cout << std::endl;
 
+	std::cout << std::endl << help_title_8 << std::endl;
+
+	for (int i = 0; i < help_title_8.length(); i++)
+		std::cout << "=";
+		std::cout << std::endl;
+
+	std::string line = "Snake_art.txt";
+	std::ifstream in_file;
+	in_file.open("Snake_art.txt");
+	if (in_file.is_open())
+	{
+		while (getline(in_file, line))
+			std::cout << "                       " << line << std::endl;
+
+		std::cout << std::endl;
+	}
+	else
+	{
+		std::cout << "                                        xxxxx" << std::endl << "                                 $ ~Oxxxx   xxxxx     xxxxxxxxxxxxx" << std::endl << "                                                xxxxxxx" << std::endl;
+	}
+	in_file.close();
+
+	std::cout << std::endl;
+	std::cout << "Snake Impact!!! " << game_version << " " << __DATE__ << ", " << __TIME__ << std::endl;
+
+	for (int i = 0; i < 110; i++)
+		std::cout << "=";
+		std::cout << std::endl;
+
 	std::cout << std::endl << "Scroll up for more info. Press Z to continue where you left off.";
 
 	switch (_getch())
@@ -254,8 +298,8 @@ void Scoreboard()
 	{
 		if (check_empty.peek() == std::ifstream::traits_type::eof())
 		{
-			std::cout << "       ~~~~~" << std::endl << "$ ~O~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "               ~~~~~~~" << std::endl;
-			std::cout << std::endl << "Nothing to see here..." << std::endl;
+			std::cout << "                                        ~~~~~" << std::endl << "                                 $ ~O~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "                                                ~~~~~~~" << std::endl;
+			std::cout << std::endl << "                                   Nothing to see here..." << std::endl;
 		}
 		else
 		{
@@ -265,6 +309,12 @@ void Scoreboard()
 		}
 	}
 
+	else
+	{
+		std::cout << "                                        ~~~~~" << std::endl << "                                 $ ~O~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "                                                ~~~~~~~" << std::endl;
+		std::cout << std::endl << "                                       Nothing to see here..." << std::endl;
+	}
+
 	in_file.close();
 	system("pause");
 }
@@ -272,6 +322,7 @@ void Scoreboard()
 int main()
 {
 	srand(time(nullptr));
+	Window_settings();
 
 	enum direction
 	{
@@ -279,7 +330,7 @@ int main()
 	};
 	direction dir;
 
-	const short	width = 60, height = 20;
+	const short	map_width = 60, map_height = 20;
 	unsigned short tail_length = 0;
 	long score = 0;
 	static std::string player_name;
@@ -292,10 +343,10 @@ int main()
 	char head_model = 'O';
 	short	x = 2,
 			y = 2,
-			pearl_x = rand() % width,
-			pearl_y = rand() % height,
-			bonus_x = rand() % width,
-			bonus_y = rand() % height,
+			pearl_x = rand() % map_width,
+			pearl_y = rand() % map_height,
+			bonus_x = rand() % map_width,
+			bonus_y = rand() % map_height,
 			tail_x[999],
 			tail_y[999],
 			game_speed,
@@ -306,34 +357,276 @@ int main()
 
 	dir = STOP;
 
+	auto current_time = std::chrono::system_clock::now();
+
+	auto duration = current_time.time_since_epoch();
+	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+
+	std::time_t current_time_in_seconds = milliseconds.count() / 1000;
+	int milliseconds_remainder = milliseconds.count() % 1000;
+
+	std::tm time_info;
+	localtime_s(&time_info, &current_time_in_seconds);
+
 	std::string line = "Snake_art.txt";
 	std::ifstream in_file;
 	in_file.open("Snake_art.txt");
 	if (in_file.is_open())
 	{
 		while (getline(in_file, line))
-			std::cout << line << std::endl;
+			std::cout << "                       " << line << std::endl;
 
 		std::cout << std::endl;
 	}
 	else
 	{
-		std::cout << "       xxxxx" << std::endl << "$ ~Oxxxx   xxxxx     xxxxxxxxxxxxx" << std::endl << "               xxxxxxx" << std::endl;
+		std::cout << "                                        xxxxx" << std::endl << "                                 $ ~Oxxxx   xxxxx     xxxxxxxxxxxxx" << std::endl << "                                                xxxxxxx" << std::endl;
 	}
 	in_file.close();
 
-	std::cout << std::endl << "****Welcome to Snake Impact!!!****" << std::endl;
-	std::cout << " **v2.3.0. By Ryck. Sep/7/2023.** " << std::endl;
+	std::cout << std::endl << "                                 ****Welcome to Snake Impact!!!****" << std::endl;
+	std::cout << "                                  **" << game_version << ". By Ryck. Sep/7/2023.** " << std::endl;
 
 	if (!get_player_name)
 	{
-		std::cout << std::endl << "Hi adventurer! What should I call you?: ";
+		short dialogue_randomizer1 = rand() % 5 + 1;
+		std::string welcome_message;
+
+		if (dialogue_randomizer1 == 1)
+		{
+			welcome_message = "Hi, adventurer! What should I call you?: ";
+		}
+		if (dialogue_randomizer1 == 2)
+		{
+			welcome_message = "Let's collect some pearls! And your name is?: ";
+		}
+		if (dialogue_randomizer1 == 3)
+		{
+			welcome_message = "My name is Snakey, and you?: ";
+		}
+		if (dialogue_randomizer1 == 4)
+		{
+			welcome_message = "Right place, right time. What's your name?: ";
+		}
+		if (dialogue_randomizer1 == 5)
+		{
+			welcome_message = "Please don't let me hit the wall. What's your cool name?: ";
+		}
+
+		std::cout << std::endl<< welcome_message;
 
 		std::getline(std::cin, player_name);
 
-		while (player_name.length() > 25)
+		while (player_name.length() == 0 || player_name.length() > 37)
 		{
-			std::cout << "Hmmm. That's not your name! Try a shorter one: ";
+
+			short dialogue_randomizer2 = rand() % 50 + 1;
+
+			std::string ask_again;
+
+			if (dialogue_randomizer2 == 1)
+			{
+				ask_again = "Interesting choice, but that's not your name. Please enter your name again: ";
+			}
+			if (dialogue_randomizer2 == 2)
+			{
+				ask_again = "You're almost there, adventurer! Give me your real name: ";
+			}
+			if (dialogue_randomizer2 == 3)
+			{
+				ask_again = "Hmm, I don't think that's it. Try another name, please: ";
+			}
+			if (dialogue_randomizer2 == 4)
+			{
+				ask_again = "You're tricking me, adventurer! Your real name, please: ";
+			}
+			if (dialogue_randomizer2 == 5)
+			{
+				ask_again = "That name doesn't sound right. Try again: ";
+			}
+			if (dialogue_randomizer2 == 6)
+			{
+				ask_again = "I'm onto you, adventurer! Give me your true name: ";
+			}
+			if (dialogue_randomizer2 == 7)
+			{
+				ask_again = "Not quite there. Provide your name, adventurer: ";
+			}
+			if (dialogue_randomizer2 == 8)
+			{
+				ask_again = "You can't fool me, adventurer! What's your real name?: ";
+			}
+			if (dialogue_randomizer2 == 9)
+			{
+				ask_again = "That's an interesting choice, but not your real name. Try again: ";
+			}
+			if (dialogue_randomizer2 == 10)
+			{
+				ask_again = "You're getting closer, adventurer! Your true name, please: ";
+			}
+			if (dialogue_randomizer2 == 11)
+			{
+				ask_again = "Hmm, I expected a different name. Try one more time: ";
+			}
+			if (dialogue_randomizer2 == 12)
+			{
+				ask_again = "You must have mistaken your name, adventurer. Enter your real name: ";
+			}
+			if (dialogue_randomizer2 == 13)
+			{
+				ask_again = "That's not the name I'm looking for. Please input your correct name: ";
+			}
+			if (dialogue_randomizer2 == 14)
+			{
+				ask_again = "Adventurer, I know that's not your real name. Please, tell me the truth: ";
+			}
+			if (dialogue_randomizer2 == 15)
+			{
+				ask_again = "I have a feeling you're playing a game with me. What's your actual name?: ";
+			}
+			if (dialogue_randomizer2 == 16)
+			{
+				ask_again = "Interesting attempt, but that's not it. Please provide your real name: ";
+			}
+			if (dialogue_randomizer2 == 17)
+			{
+				ask_again = "You can't hide your true identity from me, adventurer. What's your name?: ";
+			}
+			if (dialogue_randomizer2 == 18)
+			{
+				ask_again = "I'm not buying it, adventurer. Give me your real name, please: ";
+			}
+			if (dialogue_randomizer2 == 19)
+			{
+				ask_again = "That's not the name I was expecting. Try again, adventurer: ";
+			}
+			if (dialogue_randomizer2 == 20)
+			{
+				ask_again = "You're not fooling anyone, adventurer. Your real name, if you please: ";
+			}
+			if (dialogue_randomizer2 == 21)
+			{
+				ask_again = "A clever attempt, but not quite right. Please state your real name: ";
+			}
+			if (dialogue_randomizer2 == 22)
+			{
+				ask_again = "Your adventure name doesn't match our records. What's your true name?: ";
+			}
+			if (dialogue_randomizer2 == 23)
+			{
+				ask_again = "I sense a pseudonym, adventurer. Your real name, please: ";
+			}
+			if (dialogue_randomizer2 == 24)
+			{
+				ask_again = "You're testing my patience, adventurer. What's your actual name?: ";
+			}
+			if (dialogue_randomizer2 == 25)
+			{
+				ask_again = "An interesting choice, but not your real name. Try again, please: ";
+			}
+			if (dialogue_randomizer2 == 26)
+			{
+				ask_again = "You're on a quest for your true name, adventurer. Give it to me: ";
+			}
+			if (dialogue_randomizer2 == 27)
+			{
+				ask_again = "Hmm, that's not it. Provide your real name, adventurer: ";
+			}
+			if (dialogue_randomizer2 == 28)
+			{
+				ask_again = "Adventurer, your name should be your greatest treasure. What is it?: ";
+			}
+			if (dialogue_randomizer2 == 29)
+			{
+				ask_again = "Your name is your identity, adventurer. Please provide it correctly: ";
+			}
+			if (dialogue_randomizer2 == 30)
+			{
+				ask_again = "Nice try, but not the name I'm looking for. What's your real name?: ";
+			}
+			if (dialogue_randomizer2 == 31)
+			{
+				ask_again = "You're dancing around your real name, adventurer. Share it with us: ";
+			}
+			if (dialogue_randomizer2 == 32)
+			{
+				ask_again = "Captain Mysterious, I'm on the edge of my seat. What's your real name, master of suspense?: ";
+			}
+			if (dialogue_randomizer2 == 33)
+			{
+				ask_again = "Adventurer, your real name is the key to your destiny. What is it?: ";
+			}
+			if (dialogue_randomizer2 == 34)
+			{
+				ask_again = "You're playing a mysterious character, but I need your true name: ";
+			}
+			if (dialogue_randomizer2 == 35)
+			{
+				ask_again = "Interesting choice, but not your actual name. Try again, adventurer: ";
+			}
+			if (dialogue_randomizer2 == 36)
+			{
+				ask_again = "Your quest begins with revealing your true name. What is it?: ";
+			}
+			if (dialogue_randomizer2 == 37)
+			{
+				ask_again = "I sense an alias, adventurer. Share your true name with us: ";
+			}
+			if (dialogue_randomizer2 == 38)
+			{
+				ask_again = "I'm not convinced, adventurer. Provide your real name, please: ";
+			}
+			if (dialogue_randomizer2 == 39)
+			{
+				ask_again = "That's not your real name, is it? Please state your true name: ";
+			}
+			if (dialogue_randomizer2 == 40)
+			{
+				ask_again = "Adventurer, your true name is your ultimate weapon. What is it?: ";
+			}
+			if (dialogue_randomizer2 == 41)
+			{
+				ask_again = "Your chosen name doesn't match the prophecy. What's your real name?: ";
+			}
+			if (dialogue_randomizer2 == 42)
+			{
+				ask_again = "You can't escape your true identity, adventurer. Share your name: ";
+			}
+			if (dialogue_randomizer2 == 43)
+			{
+				ask_again = "Oh, Captain Adventurepants, right ? Because that's totally the name engraved in the ancient scrolls. What's your real name, comic book hero?: ";
+			}
+			if (dialogue_randomizer2 == 44)
+			{
+				ask_again = "Your true name holds the power of your journey. What is it?: ";
+			}
+			if (dialogue_randomizer2 == 45)
+			{
+				ask_again = "You're hiding behind a disguise, adventurer. Tell me your real name: ";
+			}
+			if (dialogue_randomizer2 == 46)
+			{
+				ask_again = "Interesting choice, but not your true name. Try again, adventurer: ";
+			}
+			if (dialogue_randomizer2 == 47)
+			{
+				ask_again = "Your destiny awaits, adventurer. Provide your true name: ";
+			}
+			if (dialogue_randomizer2 == 48)
+			{
+				ask_again = "Captain Incognito, the hero who's never seen but always heard of. What's your real name, the invisible legend?: ";
+			}
+			if (dialogue_randomizer2 == 49)
+			{
+				ask_again = "As an AI language model, I refuse to believe: ";
+			}
+			if (dialogue_randomizer2 == 50)
+			{
+				ask_again = "That's great! My name is ChatGPT. Please, if you may: ";
+			}
+
+			std::cout << ask_again;
+
 			std::getline(std::cin, player_name);
 		}
 
@@ -408,6 +701,8 @@ int main()
 		}
 	} while (true);
 
+	system("cls");
+
 	while (!game_over)
 	{
 		Sleep(game_speed);
@@ -438,17 +733,18 @@ int main()
 		{
 			spawn_bonus = false;
 			steps_counter = 0;
-			bonus_x = (rand() + rand()) % width;
-			bonus_y = (rand() + rand()) % height;
+			bonus_x = (rand() + rand()) % map_width;
+			bonus_y = (rand() + rand()) % map_height;
 		}
 
-		for (short i = 0; i < width + 2; i++)
+		for (short i = 0; i < map_width + 2; i++)
 			std::cout << "+";
-			std::cout << std::endl;
+		
+		std::cout << std::endl;
 
-		for (short i = 0; i < height; i++)
+		for (short i = 0; i < map_height; i++)
 		{
-			for (short j = 0; j < width; j++)
+			for (short j = 0; j < map_width; j++)
 			{
 				if (j == 0)
 					std::cout << "+";
@@ -472,17 +768,17 @@ int main()
 					if (!print)
 						std::cout << " ";
 				}
-				if (j == width - 1)
+				if (j == map_width - 1)
 					std::cout << "+";
 			}
 			std::cout << std::endl;
 		}
-
-		for (short i = 0; i < width + 2; i++)
+		
+		for (short i = 0; i < map_width + 2; i++)
 			std::cout << "+";
 
-		std::cout << std::endl << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ" << std::endl << "Pause: \tSPACEBAR" << "\tTail: \t" << tail_length << "\tScore:\t" << score << std::endl;
-		std::cout << __DATE__ << ", " << __TIME__;
+		std::cout << std::endl << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1<< std::endl << "Pause: \tSPACEBAR" << "\tTail: \t" << tail_length << "\tScore:\t" << score << std::endl;
+		std::cout << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std:: endl;
 
 		short	prev_tail_x = tail_x[0],
 				prev_tail_y = tail_y[0],
@@ -536,6 +832,11 @@ int main()
 				head_model_toggle = false;
 				head_model = 'O';
 				break;
+			case'b':
+				if (head_model_toggle)
+				head_model_toggle = false;
+				head_model = (char)score_multiplier + 47;
+				break;
 			case'x':
 				game_over = true;
 				break;
@@ -571,6 +872,11 @@ int main()
 			case'N':
 				head_model_toggle = false;
 				head_model = 'O';
+				break;
+			case'B':
+				if(head_model_toggle)
+				head_model_toggle = false;
+				head_model = (char)score_multiplier + 47;
 				break;
 			case'X':
 				game_over = true;
@@ -620,7 +926,7 @@ int main()
 			break;
 		}
 
-		if (x < 0 || y < 0 || x > width - 1 || y > height - 1)
+		if (x < 0 || y < 0 || x > map_width - 1 || y > map_height - 1)
 			game_over = true;
 
 		for (short i = 0; i < tail_length; i++)
@@ -630,21 +936,21 @@ int main()
 
 			if (tail_x[i] == pearl_x && tail_y[i] == pearl_y)
 			{
-				pearl_x = rand() % width;
-				pearl_y = rand() % height;
+				pearl_x = rand() % map_width;
+				pearl_y = rand() % map_height;
 			}
 
 			if (tail_x[i] == bonus_x && tail_y[i] == bonus_y)
 			{
-				bonus_x = rand() % width;
-				bonus_y = rand() % height;
+				bonus_x = rand() % map_width;
+				bonus_y = rand() % map_height;
 			}
 		}
 
 		if (x == pearl_x && y == pearl_y)
 		{
-			pearl_x = rand() % width;
-			pearl_y = rand() % height;
+			pearl_x = rand() % map_width;
+			pearl_y = rand() % map_height;
 			score += 1 * score_multiplier;
 			tail_length++;
 		}
@@ -656,8 +962,8 @@ int main()
 			if (tail_length >= 750)
 				tail_length -= rand() % 3 + 1;
 			score += 100 * score_multiplier * bonus_sign;
-			bonus_x = rand() % width;
-			bonus_y = rand() % height;
+			bonus_x = rand() % map_width;
+			bonus_y = rand() % map_height;
 			steps_counter = 0;
 			spawn_bonus = false;
 		}
@@ -666,7 +972,7 @@ int main()
 		{
 			system("cls");
 
-			std::cout << "You are the King of Snake Impact!!!" << std::endl;
+			std::cout << "                          You are the King of Snake Impact!!!" << std::endl;
 			king_of_snake_impact = true;
 			game_over = true;
 			system("pause");
@@ -686,7 +992,7 @@ int main()
 				file << "=";
 				file << std::endl;
 
-			file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << "Score" << std::left << std::setw(1) << "|" << std::left << std::setw(12) << "Date" << std::left << std::setw(1) << "|" << std::left << std::setw(9) << "Time" << std::left << std::setw(1) << "|" << std::left << std::setw(34) << "Player Name" << std::left << std::setw(1) << "|" << std::endl;
+			file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << "Score" << std::left << std::setw(1) << "|" << std::left << std::setw(10) << "Date" << std::left << std::setw(1) << "|" << std::left << std::setw(8) << "Time" << std::left << std::setw(1) << "|" << std::left << std::setw(37) << "Player Name" << std::left << std::setw(1) << "|" << std::endl;
 
 			for (int i = 0; i < 110; i++)
 				file << "=";
@@ -694,7 +1000,7 @@ int main()
 
 			if (king_of_snake_impact == true)
 			{
-				file << std::left << std::setw(1) << "|" << std::left << std::setw(36) << score << std::left << std::setw(14) << "The Chosen One" << std::left << std::setw(1) << "|" << std::left << std::setw(12) << __DATE__ << std::left << std::setw(1) << "|" << std::left << std::setw(9) << __TIME__ << std::left << std::setw(1) << "|" << std::left << std::setw(34) << player_name << std::left << std::setw(1) << "|" << std::endl;
+				file << std::left << std::setw(1) << "|" << std::left << std::setw(36) << score << std::left << std::setw(14) << "The Chosen One" << std::left << std::setw(1) << "|" << std::left << std::setw(4) << (time_info.tm_year + 1900) << ' ' << std::right << std::setw(2) << (time_info.tm_mon + 1) << ' ' << std::right << std::setw(2) << time_info.tm_mday << std::left << std::setw(1) << "|" << std::right << std::setw(2) << time_info.tm_hour << ':' << std::right << std::setw(2) << time_info.tm_min << ':' << std::right << std::setw(2) << time_info.tm_sec << std::left << std::setw(1) << "|" << std::left << std::setw(37) << player_name << std::left << std::setw(1) << "|" << std::endl;
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
@@ -702,7 +1008,7 @@ int main()
 			}
 			else
 			{
-				file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << score << std::left << std::setw(1) << "|" << std::left << std::setw(12) << __DATE__ << std::left << std::setw(1) << "|" << std::left << std::setw(9) << __TIME__ << std::left << std::setw(1) << "|" << std::left << std::setw(34) << player_name << std::left << std::setw(1) << "|" << std::endl;
+				file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << score << std::left << std::setw(1) << "|" << std::left << std::setw(4) << (time_info.tm_year + 1900) << ' ' << std::right << std::setw(2) << (time_info.tm_mon + 1) << ' ' << std::right << std::setw(2) << time_info.tm_mday << std::left << std::setw(1) << "|" << std::right << std::setw(2) << time_info.tm_hour << ':' << std::right << std::setw(2) << time_info.tm_min << ':' << std::right << std::setw(2) << time_info.tm_sec << std::left << std::setw(1) << "|" << std::left << std::setw(37) << player_name << std::left << std::setw(1) << "|" << std::endl;
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
@@ -713,7 +1019,7 @@ int main()
 		{
 			if (king_of_snake_impact == true)
 			{
-				file << std::left << std::setw(1) << "|" << std::left << std::setw(36) << score << std::left << std::setw(14) << "The Chosen One" << std::left << std::setw(1) << "|" << std::left << std::setw(12) << __DATE__ << std::left << std::setw(1) << "|" << std::left << std::setw(9) << __TIME__ << std::left << std::setw(1) << "|" << std::left << std::setw(34) << player_name << std::left << std::setw(1) << "|" << std::endl;
+				file << std::left << std::setw(1) << "|" << std::left << std::setw(36) << score << std::left << std::setw(14) << "The Chosen One" << std::left << std::setw(1) << "|" << std::left << std::setw(4) << (time_info.tm_year + 1900) << ' ' << std::right << std::setw(2) << (time_info.tm_mon + 1) << ' ' << std::right << std::setw(2) << time_info.tm_mday << std::left << std::setw(1) << "|" << std::right << std::setw(2) << time_info.tm_hour << ':' << std::right << std::setw(2) << time_info.tm_min << ':' << std::right << std::setw(2) << time_info.tm_sec << std::left << std::setw(1) << "|" << std::left << std::setw(37) << player_name << std::left << std::setw(1) << "|" << std::endl;
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
@@ -721,7 +1027,7 @@ int main()
 			}
 			else
 			{
-				file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << score << std::left << std::setw(1) << "|" << std::left << std::setw(12) << __DATE__ << std::left << std::setw(1) << "|" << std::left << std::setw(9) << __TIME__ << std::left << std::setw(1) << "|" << std::left << std::setw(34) << player_name << std::left << std::setw(1) << "|" << std::endl;
+				file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << score << std::left << std::setw(1) << "|" << std::left << std::setw(4) << (time_info.tm_year + 1900) << ' ' << std::right << std::setw(2) << (time_info.tm_mon + 1) << ' ' << std::right << std::setw(2) << time_info.tm_mday << std::left << std::setw(1) << "|" << std::right << std::setw(2) << time_info.tm_hour << ':' << std::right << std::setw(2) << time_info.tm_min << ':' << std::right << std::setw(2) << time_info.tm_sec << std::left << std::setw(1) << "|" << std::left << std::setw(37) << player_name << std::left << std::setw(1) << "|" << std::endl;
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
@@ -731,7 +1037,32 @@ int main()
 
 		file.close();
 
-		std::cout << std::endl << std::endl << "Good game, " << player_name << "! Play again? (y/n): ";
+		short dialogue_randomizer3 = rand() % 5 + 1;
+		short dialogue_randomizer4 = rand() % 5 + 1;
+		std::string play_again1, play_again2;
+
+		if (dialogue_randomizer3 == 1)
+			play_again1 = "Good game";
+		if (dialogue_randomizer3 == 2)
+			play_again1 = "Absolutely perfect";
+		if (dialogue_randomizer3 == 3)
+			play_again1 = "Well done";
+		if (dialogue_randomizer3 == 4)
+			play_again1 = "That was great";
+		if (dialogue_randomizer3 == 5)
+			play_again1 = "What a pro";
+		if (dialogue_randomizer4 == 1)
+			play_again2 = "Play again?";
+		if (dialogue_randomizer4 == 2)
+			play_again2 = "One more round?";
+		if (dialogue_randomizer4 == 3)
+			play_again2 = "This calls for another round!";
+		if (dialogue_randomizer4 == 4)
+			play_again2 = "Let's do it again!";
+		if (dialogue_randomizer4 == 5)
+			play_again2 = "Come on, beat that score!";
+
+		std::cout << std::endl << play_again1 << ", " << player_name << "! " << play_again2 << " (y/n): ";
 
 		do
 		{
@@ -753,13 +1084,18 @@ int main()
 		if (in_file.is_open())
 		{
 			while (getline(in_file, line))
-				std::cout << line << std::endl;
+				std::cout << "                       " << line << std::endl;
+
+			std::cout << std::endl << "                                 Thanks for playing Snake Impact!!!" << std::endl;
+			std::cout << "                                  **" << game_version << ". By Ryck. Sep/7/2023.** " << std::endl;
 
 			std::cout << std::endl;
 		}
 		else
 		{
-			std::cout << "       ooooo" << std::endl << "$ ~Ooooo   ooooo     ooooooooooooo" << std::endl << "               ooooooo" << std::endl;
+			std::cout << "                                        ooooo" << std::endl << "                                 $ ~Ooooo   ooooo     ooooooooooooo" << std::endl << "                                                ooooooo" << std::endl;
+			std::cout << std::endl << "                                 Thanks for playing Snake Impact!!!" << std::endl;
+			std::cout << "                                  **" << game_version << ". By Ryck. Sep/7/2023.** " << std::endl;
 		}
 		in_file.close();
 
