@@ -1,4 +1,4 @@
-﻿#include <chrono>
+#include <chrono>
 #include <conio.h>
 #include <fstream>
 #include <iomanip>
@@ -7,7 +7,7 @@
 #include <string>
 #include <Windows.h>
 
-std::string game_version = "v2.3.2"; //Developers only!
+std::string game_version = "v2.3.3"; //Developers only!
 
 void Window_settings()
 {
@@ -16,6 +16,7 @@ void Window_settings()
 	if (console != NULL)
 	{
 		SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_SIZEBOX);
+		SetWindowLong(console, GWL_STYLE, GetWindowLongPtr(console, GWL_STYLE) & ~WS_MAXIMIZEBOX);
 	}
 }
 
@@ -335,7 +336,7 @@ int main()
 	static std::string player_name;
 	static char tail_model = 'x';
 	bool game_over = false,
-		 king_of_snake_impact = false;
+		king_of_snake_impact = false;
 	static bool spawn_bonus = false,
 		get_player_name = false,
 		head_model_toggle = false;
@@ -706,6 +707,7 @@ int main()
 	{
 		Sleep(game_speed);
 		system("cls");
+		while (ShowCursor(FALSE) >= 0);
 
 		if ((tail_length > 0) && (tail_length % dynamic_bonus == 0))
 		{
