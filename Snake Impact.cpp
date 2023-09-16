@@ -7,17 +7,16 @@
 #include <string>
 #include <Windows.h>
 
-std::string game_version = "v2.3.1"; //Developers only!
+std::string game_version = "v2.3.2"; //Developers only!
 
 void Window_settings()
 {
 	HWND console = GetConsoleWindow();
 
-	if (console != NULL) 
+	if (console != NULL)
 	{
 		SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_SIZEBOX);
 	}
-
 }
 
 void Help()
@@ -37,13 +36,13 @@ void Help()
 
 	for (int i = 0; i < help_title_1.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
-		
+	std::cout << std::endl;
+
 	std::cout << std::endl << std::left << std::setw(20) << "Option" << std::setw(10) << "Key" << std::setw(80) << "Description" << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::left << std::setw(20) << "UP" << std::setw(10) << "W" << std::setw(50) << "Snakey crawls upwards." << std::endl;
 	std::cout << std::left << std::setw(20) << "DOWN" << std::setw(10) << "S" << std::setw(50) << "Snakey crawls downwards." << std::endl;
@@ -56,7 +55,7 @@ void Help()
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::left << std::setw(20) << "Light blue text" << std::setw(10) << "1" << std::setw(50) << "Changes text color to light blue. Press 1 now to activate." << std::endl;
 	std::cout << std::left << std::setw(20) << "Green text" << std::setw(10) << "2" << std::setw(50) << "Changes text color to green. Press 2 now to activate." << std::endl;
@@ -75,28 +74,28 @@ void Help()
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::left << std::setw(20) << "Scoreboard" << std::setw(10) << "Y" << std::setw(50) << "Pauses the game and checks the scoreboard. Press Y while in-game." << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << help_title_2 << std::endl;
-		
+
 	for (int i = 0; i < help_title_2.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl;
 	std::cout << "Welcome to Snake Impact!!! Your mission is to help Snakey gobble up as much pearl and bonuses as possible" << std::endl << "while avoiding collisions." << std::endl;
 	std::cout << std::endl << "1. Rules" << std::endl << std::endl;
-	std::cout << "*The snake will constantly move in the direction it's facing once you started." << std::endl;
-	std::cout << "*It's game over if the snake collides with the wall or itself." << std::endl;
+	std::cout << "*Snakey will constantly move in the direction it's facing once you started." << std::endl;
+	std::cout << "*It's game over if Snakey collides with the wall or itself." << std::endl;
 	std::cout << std::endl << "2. Collecting Pearls and Bonuses" << std::endl << std::endl;
 	std::cout << "*Pearls and bonuses will appear randomly on the screen." << std::endl;
-	std::cout << "*Direct your snake to eat the pearl or bonus to make it grow longer." << std::endl;
+	std::cout << "*Direct Snakey to eat the pearl or bonus to make it grow longer." << std::endl;
 	std::cout << std::endl << "3. Scoring" << std::endl << std::endl;
 	std::cout << "*Your score increases with each pearl and bonus consumed." << std::endl;
 	std::cout << "*Bonuses appear when Snakey's tail is divisible by 0. Watch out for the bonus before it expires!" << std::endl;
@@ -105,20 +104,20 @@ void Help()
 	std::cout << "*Okay, so you reached the tail length of 750. You're a God! Bonuses will now randomly decrease tail's length" << std::endl << " by 1-3. Email me about your achievement!" << std::endl;
 	std::cout << "*Try to achieve the highest score possible and share it with your friends!" << std::endl;
 	std::cout << std::endl << "4. Special Considerations" << std::endl << std::endl;
-	std::cout << "*As the snake grows longer, it becomes increasingly challenging to avoid collisions." << std::endl;
-	std::cout << "*Plan your moves carefully to prevent the snake from trapping itself." << std::endl;
+	std::cout << "*As Snakey grows longer, it becomes increasingly challenging to avoid collisions." << std::endl;
+	std::cout << "*Plan your moves carefully to prevent Snakey from trapping itself." << std::endl;
 	std::cout << std::endl << "5. Game Over" << std::endl << std::endl;
-	std::cout << "*The game ends when the snake collides with the wall or itself." << std::endl;
+	std::cout << "*The game ends when the Snakey collides with the wall or itself." << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << help_title_3 << std::endl;
 
 	for (int i = 0; i < help_title_3.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl;
 	std::cout << "Welcome to the world of Snake Impact!!! In a realm where the laws of nature are defied, you are entrusted with" << std::endl;
@@ -158,56 +157,56 @@ void Help()
 	std::cout << "How he wish he can get a programming job already, although he believes that good things take time so he will" << std::endl;
 	std::cout << "do his best to prepare for that day. Right now, the best he can do is to make projects and collaborate in" << std::endl;
 	std::cout << "Github while acquiring as much as possible relevant certifications. 'Til then!" << std::endl << std::endl;
-	std::cout << "Snake Impact!!! is his first, decent programming project and he knows that he can do more and do better!"<< std::endl;
+	std::cout << "Snake Impact!!! is his first, decent programming project and he knows that he can do more and do better!" << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
-		std::cout << std::endl << help_title_5 << std::endl;
+	std::cout << std::endl << help_title_5 << std::endl;
 
 	for (int i = 0; i < help_title_5.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
-		std::cout << std::endl;
-		std::cout << "You can PayPal it at erycklouiszeflores@protonmail.com. Oh, you mean tips about the game? Nothing, just be" << std::endl << "good at it." << std::endl;
+	std::cout << std::endl;
+	std::cout << "You can PayPal it at erycklouiszeflores@protonmail.com. Oh, you mean tips about the game? Nothing, just be" << std::endl << "good at it." << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << help_title_6 << std::endl;
 
 	for (int i = 0; i < help_title_6.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
-	std::cout<< std::endl;
+	std::cout << std::endl;
 	std::cout << "I'd like to hear from you! Send me an email at erycklouiszeflores@protonmail.com. Just don't DDoS me." << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << help_title_7 << std::endl;
 
 	for (int i = 0; i < help_title_7.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl;
 	std::cout << "This game is dedicated to my family who never gets tired supporting me and of course, The All Knowing One. +" << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << help_title_8 << std::endl;
 
 	for (int i = 0; i < help_title_8.length(); i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::string line = "Snake_art.txt";
 	std::ifstream in_file;
@@ -230,7 +229,7 @@ void Help()
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
-		std::cout << std::endl;
+	std::cout << std::endl;
 
 	std::cout << std::endl << "Scroll up for more info. Press Z to continue where you left off.";
 
@@ -282,7 +281,7 @@ void Ping()
 {
 	system("cls");
 	system("ping google.com -t");
-	system("pause");	
+	system("pause");
 }
 
 void Scoreboard()
@@ -330,30 +329,30 @@ int main()
 	};
 	direction dir;
 
-	const short	map_width = 60, map_height = 20;
+	const short	map_width = 108, map_height = 20, map_border_left = 25, map_border_right = 85, total_map_width = map_border_left - map_border_right;
 	unsigned short tail_length = 0;
 	long score = 0;
 	static std::string player_name;
 	static char tail_model = 'x';
-	bool	game_over = false,
-			king_of_snake_impact = false;
+	bool game_over = false,
+		 king_of_snake_impact = false;
 	static bool spawn_bonus = false,
-				get_player_name = false,
-				head_model_toggle = false;
+		get_player_name = false,
+		head_model_toggle = false;
 	char head_model = 'O';
-	short	x = 2,
-			y = 2,
-			pearl_x = rand() % map_width,
-			pearl_y = rand() % map_height,
-			bonus_x = rand() % map_width,
-			bonus_y = rand() % map_height,
-			tail_x[999],
-			tail_y[999],
-			game_speed,
-			score_multiplier = 0,
-			steps_counter = 0,
-			bonus_sign = 0,
-			dynamic_bonus = 10;
+	short head_x = map_border_left + 2,
+		head_y = 2,
+		pearl_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2),
+		pearl_y = rand() % map_height,
+		bonus_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2),
+		bonus_y = rand() % map_height,
+		tail_x[999],
+		tail_y[999],
+		game_speed,
+		score_multiplier = 0,
+		steps_counter = 0,
+		bonus_sign = 0,
+		dynamic_bonus = 10;
 
 	dir = STOP;
 
@@ -413,7 +412,7 @@ int main()
 			welcome_message = "Please don't let me hit the wall. What's your cool name?: ";
 		}
 
-		std::cout << std::endl<< welcome_message;
+		std::cout << std::endl << welcome_message;
 
 		std::getline(std::cin, player_name);
 
@@ -726,7 +725,7 @@ int main()
 			bonus_sign = 1;
 
 		if (spawn_bonus)
-			if (x - 1 || x + 1 || y - 1 || y + 1)
+			if (head_x - 1 || head_x + 1 || head_y - 1 || head_y + 1)
 				steps_counter++;
 
 		if (steps_counter > 80)
@@ -739,18 +738,18 @@ int main()
 
 		for (short i = 0; i < map_width + 2; i++)
 			std::cout << "+";
-		
+
 		std::cout << std::endl;
 
 		for (short i = 0; i < map_height; i++)
 		{
 			for (short j = 0; j < map_width; j++)
 			{
-				if (j == 0)
+				if (j == map_border_left)
 					std::cout << "+";
 				if ((j == bonus_x && i == bonus_y) && (spawn_bonus))
 					std::cout << bonus_sign;
-				else if (j == x && i == y)
+				else if (j == head_x && i == head_y)
 					std::cout << head_model;
 				else if (j == pearl_x && i == pearl_y)
 					std::cout << "@";
@@ -768,24 +767,25 @@ int main()
 					if (!print)
 						std::cout << " ";
 				}
-				if (j == map_width - 1)
+				if (j == map_border_right - 1)
 					std::cout << "+";
 			}
 			std::cout << std::endl;
 		}
-		
+
 		for (short i = 0; i < map_width + 2; i++)
 			std::cout << "+";
 
-		std::cout << std::endl << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1<< std::endl << "Pause: \tSPACEBAR" << "\tTail: \t" << tail_length << "\tScore:\t" << score << std::endl;
-		std::cout << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std:: endl;
+		std::cout << std::endl << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1 << std::endl << "Pause: \tSPACEBAR" << "\tTail: \t" << tail_length << "\tScore:\t" << score << std::endl;
+		std::cout << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
 
-		short	prev_tail_x = tail_x[0],
-				prev_tail_y = tail_y[0],
-				x_tail_buffer,
-				y_tail_buffer;
-		tail_x[0] = x;
-		tail_y[0] = y;
+		short prev_tail_x = tail_x[0],
+			prev_tail_y = tail_y[0],
+			x_tail_buffer,
+			y_tail_buffer;
+
+		tail_x[0] = head_x;
+		tail_y[0] = head_y;
 
 		for (short i = 1; i < tail_length; i++)
 		{
@@ -834,7 +834,7 @@ int main()
 				break;
 			case'b':
 				if (head_model_toggle)
-				head_model_toggle = false;
+					head_model_toggle = false;
 				head_model = (char)score_multiplier + 47;
 				break;
 			case'x':
@@ -874,8 +874,8 @@ int main()
 				head_model = 'O';
 				break;
 			case'B':
-				if(head_model_toggle)
-				head_model_toggle = false;
+				if (head_model_toggle)
+					head_model_toggle = false;
 				head_model = (char)score_multiplier + 47;
 				break;
 			case'X':
@@ -913,56 +913,64 @@ int main()
 				head_model = '>';
 			break;
 		case UP:
-			y--;
+			head_y--;
 			break;
 		case DOWN:
-			y++;
+			head_y++;
 			break;
 		case LEFT:
-			x--;
+			head_x--;
 			break;
 		case RIGHT:
-			x++;
+			head_x++;
 			break;
 		}
 
-		if (x < 0 || y < 0 || x > map_width - 1 || y > map_height - 1)
+		if (head_x < map_border_left || head_y < 0 || head_x > map_border_right - 1 || head_y > map_height - 1)
+		{
 			game_over = true;
+			head_model = 'X';
+			std::cout << std::endl << "You hit the wall!" << std::endl;
+		}
 
 		for (short i = 0; i < tail_length; i++)
 		{
-			if (tail_x[i] == x && tail_y[i] == y)
+			if (tail_x[i] == head_x && tail_y[i] == head_y)
+			{
 				game_over = true;
+				head_model = 'X';
+				std::cout << std::endl << "You bit your tail!" << std::endl;
+			}
 
 			if (tail_x[i] == pearl_x && tail_y[i] == pearl_y)
 			{
-				pearl_x = rand() % map_width;
+				pearl_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2);
 				pearl_y = rand() % map_height;
 			}
 
 			if (tail_x[i] == bonus_x && tail_y[i] == bonus_y)
 			{
-				bonus_x = rand() % map_width;
+				bonus_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2);
 				bonus_y = rand() % map_height;
 			}
 		}
 
-		if (x == pearl_x && y == pearl_y)
+		if (head_x == pearl_x && head_y == pearl_y)
 		{
-			pearl_x = rand() % map_width;
+			pearl_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2);
 			pearl_y = rand() % map_height;
 			score += 1 * score_multiplier;
 			tail_length++;
 		}
 
-		if ((tail_length > 0) && (spawn_bonus) && (x == bonus_x && y == bonus_y))
+		if ((tail_length > 0) && (spawn_bonus) && (head_x == bonus_x && head_y == bonus_y))
 		{
 			if (tail_length >= 500)
 				tail_length -= rand() % 2 + 1;
 			if (tail_length >= 750)
 				tail_length -= rand() % 3 + 1;
 			score += 100 * score_multiplier * bonus_sign;
-			bonus_x = rand() % map_width;
+			bonus_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2);
 			bonus_y = rand() % map_height;
 			steps_counter = 0;
 			spawn_bonus = false;
@@ -972,9 +980,27 @@ int main()
 		{
 			system("cls");
 
-			std::cout << "                          You are the King of Snake Impact!!!" << std::endl;
-			king_of_snake_impact = true;
+			std::string line = "The_chosen_one.txt";
+			std::ifstream in_file;
+			in_file.open("The_chosen_one.txt");
+			if (in_file.is_open())
+			{
+				while (getline(in_file, line))
+					std::cout << "                       " << line << std::endl;
+
+				std::cout << std::endl << "                                    #The King of Snake Impact!!!";
+				std::cout << std::endl << "                                               " << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
+			}
+			else
+			{
+				std::cout << "                                        ~~~~~" << std::endl << "                                 $ ~<~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "                                                ~~~~~~~" << std::endl;
+				std::cout << std::endl << "                                    #The King of Snakes Impact!!!";
+				std::cout << std::endl << "                                          " << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
+			}
+			in_file.close();
+
 			game_over = true;
+
 			system("pause");
 		}
 	}
@@ -990,13 +1016,13 @@ int main()
 		{
 			for (int i = 0; i < 110; i++)
 				file << "=";
-				file << std::endl;
+			file << std::endl;
 
 			file << std::left << std::setw(1) << "|" << std::left << std::setw(50) << "Score" << std::left << std::setw(1) << "|" << std::left << std::setw(10) << "Date" << std::left << std::setw(1) << "|" << std::left << std::setw(8) << "Time" << std::left << std::setw(1) << "|" << std::left << std::setw(37) << "Player Name" << std::left << std::setw(1) << "|" << std::endl;
 
 			for (int i = 0; i < 110; i++)
 				file << "=";
-				file << std::endl;
+			file << std::endl;
 
 			if (king_of_snake_impact == true)
 			{
@@ -1004,7 +1030,7 @@ int main()
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
-					file << std::endl;
+				file << std::endl;
 			}
 			else
 			{
@@ -1012,7 +1038,7 @@ int main()
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
-					file << std::endl;
+				file << std::endl;
 			}
 		}
 		else
@@ -1023,7 +1049,7 @@ int main()
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
-					file << std::endl;
+				file << std::endl;
 			}
 			else
 			{
@@ -1031,7 +1057,7 @@ int main()
 
 				for (int i = 0; i < 110; i++)
 					file << "-";
-					file << std::endl;
+				file << std::endl;
 			}
 		}
 
@@ -1075,7 +1101,7 @@ int main()
 			else if (ans == 'n' || ans == 'N')
 				break;
 		} while (true);
-		
+
 		system("cls");
 
 		std::string line = "Snake_art.txt";
