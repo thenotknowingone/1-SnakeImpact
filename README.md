@@ -57,6 +57,30 @@ User Interface
 - Improved graphic designs.
 ______________________________________________________________________________________________________________________________
 
+# Snake Impact!!! v2.3.2 (Sept/17/2023)
+
+User Interface
+
+- Centered map.
+- Changed font for improved game control.
+______________________________________________________________________________________________________________________________
+
+# Snake Impact!!! v2.3.1 (Sept/16/2023)
+
+Bugs
+
+- Fixed scoreboard date and time.
+
+User Interface
+
+- Fixed date and time while in game. Now refreshes every time the game starts.
+- Added level indicator while in-game.
+- Added fun features.
+- Adventurers can now enter up to 37 characters as for their username.
+- Added more dialogue in some parts of the game.
+- Improved graphic designs.
+______________________________________________________________________________________________________________________________
+
 # Snake Impact!!! v2.3.0 (Sept/15/2023)
 
 Features
