@@ -7,18 +7,7 @@
 #include <string>
 #include <Windows.h>
 
-std::string game_version = "v2.3.3"; //Developers only!
-
-void Window_settings()
-{
-	HWND console = GetConsoleWindow();
-
-	if (console != NULL)
-	{
-		SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_SIZEBOX);
-		SetWindowLong(console, GWL_STYLE, GetWindowLongPtr(console, GWL_STYLE) & ~WS_MAXIMIZEBOX);
-	}
-}
+std::string game_version = "v2.3.4"; //Developers only!
 
 void Help()
 {
@@ -226,7 +215,7 @@ void Help()
 	in_file.close();
 
 	std::cout << std::endl;
-	std::cout << "Snake Impact!!! " << game_version << " " << __DATE__ << ", " << __TIME__ << std::endl;
+	std::cout << "Snake Impact!!! " << game_version << " Final release. " << __DATE__ << ", " << __TIME__ << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
@@ -322,7 +311,48 @@ void Scoreboard()
 int main()
 {
 	srand(time(nullptr));
-	Window_settings();
+
+	HWND console = GetConsoleWindow();
+
+	if (console != NULL)
+	{
+		int console_width = 110;
+		int console_height = 30;
+			
+		COORD buffer_size;
+		buffer_size.X = console_width;
+		buffer_size.Y = console_height;
+
+		SMALL_RECT window_size;
+		window_size.Left = 0;
+		window_size.Top = 0;
+		window_size.Right = console_width - 1;
+		window_size.Bottom = console_height - 1;
+
+		CONSOLE_FONT_INFOEX game_font;
+		game_font.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+		game_font.nFont = 0;
+		game_font.dwFontSize.X = 12;
+		game_font.dwFontSize.Y = 16;
+		game_font.FontFamily = FF_DONTCARE;
+		game_font.FontWeight = FW_NORMAL;
+		lstrcpyW(game_font.FaceName, L"Terminal");
+
+		SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), TRUE, &window_size);
+		SetWindowLong(console, GWL_STYLE, GetWindowLong(console, GWL_STYLE) & ~WS_SIZEBOX);
+		SetWindowLong(console, GWL_STYLE, GetWindowLongPtr(console, GWL_STYLE) & ~WS_MAXIMIZEBOX);
+		SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &game_font);
+		EnableScrollBar(console, SB_BOTH, FALSE);
+	}
+
+	HANDLE mutex = CreateMutexA(NULL, FALSE, "my mutex");
+	DWORD mutex_wait_result = WaitForSingleObject(mutex, 0);
+	if (mutex_wait_result != WAIT_OBJECT_0)
+	{
+		MessageBox(HWND_DESKTOP, TEXT("Snake Impact!!! is already running."), TEXT("Multiple instance warning"), MB_OK | MB_ICONINFORMATION);
+		PostMessage(console, WM_CLOSE, 0, 0);
+		CloseHandle(mutex);
+	}
 
 	enum direction
 	{
@@ -331,6 +361,7 @@ int main()
 	direction dir;
 
 	const short	map_width = 108, map_height = 20, map_border_left = 25, map_border_right = 85, total_map_width = map_border_left - map_border_right;
+	static bool map_buffer1 = true, map_buffer2 = false;
 	unsigned short tail_length = 0;
 	long score = 0;
 	static std::string player_name;
@@ -386,6 +417,7 @@ int main()
 
 	std::cout << std::endl << "                                 ****Welcome to Snake Impact!!!****" << std::endl;
 	std::cout << "                                  **" << game_version << ". By Ryck. Sep/7/2023.** " << std::endl;
+	std::cout << "                                               #Final" << std::endl;
 
 	if (!get_player_name)
 	{
@@ -704,10 +736,10 @@ int main()
 	system("cls");
 
 	while (!game_over)
+
 	{
 		Sleep(game_speed);
 		system("cls");
-		while (ShowCursor(FALSE) >= 0);
 
 		if ((tail_length > 0) && (tail_length % dynamic_bonus == 0))
 		{
@@ -738,10 +770,15 @@ int main()
 			bonus_y = (rand() + rand()) % map_height;
 		}
 
-		for (short i = 0; i < map_width + 2; i++)
-			std::cout << "+";
+		std::cout << std::left << std::setw(map_border_left) << "" << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << '\n';
 
-		std::cout << std::endl;
+		for (short i = 0; i < map_width + 2; i++)
+			if (i >= map_border_left && i <= map_border_right + 1)
+				std::cout << "+";
+			else
+				std::cout << " ";
+
+		std::cout << '\n';
 
 		for (short i = 0; i < map_height; i++)
 		{
@@ -772,14 +809,16 @@ int main()
 				if (j == map_border_right - 1)
 					std::cout << "+";
 			}
-			std::cout << std::endl;
+			std::cout << '\n';
 		}
 
 		for (short i = 0; i < map_width + 2; i++)
-			std::cout << "+";
+			if (i >= map_border_left && i <= map_border_right + 1)
+				std::cout << "+";
+			else
+				std::cout << " ";
 
-		std::cout << std::endl << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1 << std::endl << "Pause: \tSPACEBAR" << "\tTail: \t" << tail_length << "\tScore:\t" << score << std::endl;
-		std::cout << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
+		std::cout << '\n' << std::left << std::setw(map_border_left) << "" << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1 << '\n' << std::left << std::setw(map_border_left) << "" << "Pause: SPACEBAR\t" << "Tail: \t" << tail_length << "\tScore:\t" << score << '\n';
 
 		short prev_tail_x = tail_x[0],
 			prev_tail_y = tail_y[0],
@@ -890,7 +929,7 @@ int main()
 				Help();
 				break;
 			case ' ':
-				std::cout << std::endl << "Game is paused. ";
+				std::cout << '\n' << "Game is paused. ";
 				system("pause");
 				break;
 			case ',':
@@ -932,7 +971,7 @@ int main()
 		{
 			game_over = true;
 			head_model = 'X';
-			std::cout << std::endl << "You hit the wall!" << std::endl;
+			std::cout << '\n' << "You hit the wall!" << '\n';
 		}
 
 		for (short i = 0; i < tail_length; i++)
@@ -941,7 +980,7 @@ int main()
 			{
 				game_over = true;
 				head_model = 'X';
-				std::cout << std::endl << "You bit your tail!" << std::endl;
+				std::cout << '\n' << "You bit your tail!" << '\n';
 			}
 
 			if (tail_x[i] == pearl_x && tail_y[i] == pearl_y)
@@ -1131,6 +1170,7 @@ int main()
 	}
 
 	system("pause");
+	CloseHandle(mutex);
 	exit(1);
 	return 0;
 }
