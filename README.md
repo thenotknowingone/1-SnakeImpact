@@ -41,6 +41,17 @@ This code is a freeware. Please feel free to download, edit and re-distribute th
 
 ## Updates and Bug Fixes
 
+# Snake Impact!!! v2.3.4 (final) (Sept/18/2023)
+
+User Interface
+
+- Prevented multiple instances of the game.
+- Added a cool game icon.
+- Remade map.
+- Changed font for better gaming experience.
+- Moved clock to upper left part above the game map.
+______________________________________________________________________________________________________________________________
+
 # Snake Impact!!! v2.3.3 (Sept/17/2023)
 
 User Interface
