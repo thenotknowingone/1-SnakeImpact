@@ -41,6 +41,13 @@ This code is a freeware. Please feel free to download, edit and re-distribute th
 
 ## Updates and Bug Fixes
 
+# Snake Impact!!! v2.3.4 (remastered) (Sept/19/2023)
+
+User Interface
+
+- Fixed flickering issues and removed blinking cursors while in-game.
+______________________________________________________________________________________________________________________________
+
 # Snake Impact!!! v2.3.4 (final) (Sept/18/2023)
 
 User Interface
