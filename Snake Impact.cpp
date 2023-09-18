@@ -215,7 +215,7 @@ void Help()
 	in_file.close();
 
 	std::cout << std::endl;
-	std::cout << "Snake Impact!!! " << game_version << " Final release. " << __DATE__ << ", " << __TIME__ << std::endl;
+	std::cout << "Snake Impact!!! " << game_version << " Remastered. " << __DATE__ << ", " << __TIME__ << std::endl;
 
 	for (int i = 0; i < 110; i++)
 		std::cout << "=";
@@ -258,8 +258,10 @@ void Help()
 		Help();
 		break;
 	case 'z':
+		system("cls");
 		break;
 	case 'Z':
+		system("cls");
 		break;
 	default:
 		Help();
@@ -272,6 +274,18 @@ void Ping()
 	system("cls");
 	system("ping google.com -t");
 	system("pause");
+	system("cls");
+}
+
+void Show_cursor(bool cursor)
+{
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_CURSOR_INFO     cursorInfo;
+
+	GetConsoleCursorInfo(console, &cursorInfo);
+	cursorInfo.bVisible = cursor;
+	SetConsoleCursorInfo(console, &cursorInfo);
 }
 
 void Scoreboard()
@@ -305,7 +319,9 @@ void Scoreboard()
 	}
 
 	in_file.close();
+
 	system("pause");
+	system("cls");
 }
 
 int main()
@@ -313,7 +329,7 @@ int main()
 	srand(time(nullptr));
 
 	HWND console = GetConsoleWindow();
-
+	
 	if (console != NULL)
 	{
 		int console_width = 110;
@@ -417,7 +433,7 @@ int main()
 
 	std::cout << std::endl << "                                 ****Welcome to Snake Impact!!!****" << std::endl;
 	std::cout << "                                  **" << game_version << ". By Ryck. Sep/7/2023.** " << std::endl;
-	std::cout << "                                               #Final" << std::endl;
+	std::cout << "                                            #Remastered#" << std::endl;
 
 	if (!get_player_name)
 	{
@@ -736,10 +752,9 @@ int main()
 	system("cls");
 
 	while (!game_over)
-
 	{
 		Sleep(game_speed);
-		system("cls");
+		Show_cursor(false);
 
 		if ((tail_length > 0) && (tail_length % dynamic_bonus == 0))
 		{
@@ -766,11 +781,11 @@ int main()
 		{
 			spawn_bonus = false;
 			steps_counter = 0;
-			bonus_x = (rand() + rand()) % map_width;
+			bonus_x = map_border_left + 1 + (rand() % total_map_width / 2) + (rand() % total_map_width / 2);
 			bonus_y = (rand() + rand()) % map_height;
 		}
 
-		std::cout << std::left << std::setw(map_border_left) << "" << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << '\n';
+		std::cout << std::left << std::setw(map_border_left + 3) << "\033[H" << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << '\n';
 
 		for (short i = 0; i < map_width + 2; i++)
 			if (i >= map_border_left && i <= map_border_right + 1)
@@ -820,6 +835,7 @@ int main()
 
 		std::cout << '\n' << std::left << std::setw(map_border_left) << "" << "Keys: \tW S A D \tQuit: \tX\tHelp:\tZ\tLvl: " << score_multiplier - 1 << '\n' << std::left << std::setw(map_border_left) << "" << "Pause: SPACEBAR\t" << "Tail: \t" << tail_length << "\tScore:\t" << score << '\n';
 
+
 		short prev_tail_x = tail_x[0],
 			prev_tail_y = tail_y[0],
 			x_tail_buffer,
@@ -845,7 +861,7 @@ int main()
 		if (_kbhit())
 		{
 			switch (_getch())
-			{
+			{			
 			case'w':
 				if (head_model_toggle)
 					head_model = '^';
@@ -1030,11 +1046,11 @@ int main()
 					std::cout << "                       " << line << std::endl;
 
 				std::cout << std::endl << "                                    #The King of Snake Impact!!!";
-				std::cout << std::endl << "                                               " << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
+				std::cout << std::endl << "                                          " << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
 			}
 			else
 			{
-				std::cout << "                                        ~~~~~" << std::endl << "                                 $ ~<~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "                                                ~~~~~~~" << std::endl;
+				std::cout << "                                    M   ~~~~~" << std::endl << "                                 $ ~<~~~~   ~~~~~     ~~~~~~~~~~~~~" << std::endl << "                                                ~~~~~~~" << std::endl;
 				std::cout << std::endl << "                                    #The King of Snakes Impact!!!";
 				std::cout << std::endl << "                                          " << (time_info.tm_year + 1900) << '-' << (time_info.tm_mon + 1) << '-' << time_info.tm_mday << ' ' << time_info.tm_hour << ':' << time_info.tm_min << ':' << time_info.tm_sec << std::endl;
 			}
