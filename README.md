@@ -46,6 +46,9 @@ This code is a freeware. Please feel free to download, edit and re-distribute th
 User Interface
 
 - Fixed flickering issues and removed blinking cursors while in-game.
+
+Hotfix
+- Fixed pause game display error.
 ______________________________________________________________________________________________________________________________
 
 # Snake Impact!!! v2.3.4 (final) (Sept/18/2023)
