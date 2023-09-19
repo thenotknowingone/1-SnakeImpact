@@ -947,6 +947,7 @@ int main()
 			case ' ':
 				std::cout << '\n' << "Game is paused. ";
 				system("pause");
+				system("cls");
 				break;
 			case ',':
 				tail_model = '~';
